@@ -38,5 +38,13 @@ module.exports = {
   // add rules configurations here
   rules: {
     "import/no-default-export": "off",
+    "eslint-comments/require-description": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "react/self-closing-comp": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   },
 };

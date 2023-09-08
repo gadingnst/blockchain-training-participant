@@ -9,18 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ethers": "^6.7.1",
     "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "workspace:*"
+    "react-hot-toast": "^2.4.1",
+    "swr": "^2.2.2",
+    "ui": "*"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.5.3"
+    "autoprefixer": "^10.4.15",
+    "bufferutil": "^4.0.7",
+    "daisyui": "^3.7.3",
+    "eslint-config-custom": "*",
+    "postcss": "^8.4.29",
+    "tailwind": "^4.0.0",
+    "tsconfig": "*",
+    "typescript": "^4.5.3",
+    "utf-8-validate": "^5.0.10"
   }
 }
