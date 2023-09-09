@@ -7,28 +7,11 @@ import Link from 'next/link'
 import type { FormEventHandler} from 'react';
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import TRAINING_PARTICIPANT_ABI from './TrainingParticipant.abi.json'
+import type { IParticipantProxy} from './contract';
+import { ETH_GOURLI_RPC_URL, TRAINING_PARTICIPANT_CONTRACT_ADDRESS, getContract, getParticipants } from './contract';
 
-const TRAINING_PARTICIPANT_CONTRACT_ADDRESS = "0xf5e4d35b451ce10314ec828e35c0ae3beda38357"
-const ETH_GOURLI_RPC_URL = 'https://ethereum-goerli.publicnode.com'
-
-type IParticipantProxy = [number, string, string];
-
-function getContract(provider: ethers.ContractRunner): ethers.Contract {
-  return new ethers.Contract(
-    TRAINING_PARTICIPANT_CONTRACT_ADDRESS,
-    TRAINING_PARTICIPANT_ABI.abi,
-    provider
-  )
-}
-
-function Home(): JSX.Element {
-  const { data, isLoading } = useSWR<IParticipantProxy[]>('participant-data', async() => {
-    const callProvider = new ethers.JsonRpcProvider(ETH_GOURLI_RPC_URL);
-    const contract = getContract(callProvider)
-    const res: IParticipantProxy[] = await contract.getParticipants()
-    return res;
-  })
+function Home({ participants }: { participants:  IParticipantProxy[] }): JSX.Element {
+  const { data = participants } = useSWR<IParticipantProxy[]>('participant-data', getParticipants)
 
   const [name, setName] = useState('')
   const [role, setRole] = useState('')
@@ -83,15 +66,6 @@ function Home(): JSX.Element {
       }
     );
   }, [getSigner, name, role])
-
-  if (isLoading) {
-    return (
-      <div className='flex flex-col items-center justify-center py-16'>
-        <p className='text-xl text-primary font-bold'>Loading</p>
-        <span className="loading loading-dots loading-lg bg-primary"></span>
-      </div>
-    )
-  }
 
   return (
     <div className='p-5'>
@@ -148,7 +122,7 @@ function Home(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {data?.map(([_pid, _pName, _pRole]) => (
+          {data.map(([_pid, _pName, _pRole]) => (
             <tr key={`participant-${_pid}`}>
               <td>{_pid.toString()}</td>
               <td>{_pName}</td>
